@@ -1,0 +1,257 @@
+﻿@model Project_MVC.Models.Product
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+
+        function listProduct() {
+            var values = new Array;
+            $.each($("input[name ='options[]']:checked").closest("tr").find("td:nth-child(3)"),
+                function () {
+                    values.push($(this).text());
+                }
+            );
+            $("#dProductId").val(values.join(' '));
+        }
+    $(document).ready(function () {
+
+        $("#selectAll").click(function () {
+            $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+
+        $(".editProduct").click(function () {
+            var ProductId = $(this).closest("tr").find("td:nth-child(3)").text().trim();
+            var ProductName = $(this).closest("tr").find("td:nth-child(4)").text().trim();
+            var ProductImage = $(this).closest("tr").find("td:nth-child(5)").text().trim();
+            var ProductAvailable = $(this).closest("tr").find("td:nth-child(11)").text().trim();
+            var ProductPrice = parseFloat($(this).closest("tr").find("td:nth-child(10)").text().trim());
+            var ProductDess = $(this).closest("tr").find("td:nth-child(8)").text().trim();
+            var Category = $(this).closest("tr").find("td:nth-child(9)").text().trim();
+            $("#ProductId").val(ProductId);
+            $("#ProductName").val(ProductName);
+            $("#ProductImage").val(ProductImage);
+            $("#ProductPrice").val(ProductPrice);
+            $("#ProductDes").val(ProductDess);
+            var selectCate = document.createElementById("ProductCate");
+            for (var i, j = 0; i = selectCate.options[j]; j++) {
+                if (i.val == Category) {
+                    selectCate.selectedIndex = j;
+                    break;
+                }
+            }
+            var available = document.getElementById("avl");
+            var unavailable = document.getElementById("unavl");
+            if (ProductAvailable == "Hết hàng") {
+                available.checked = false;
+                unavailable.checked = true;
+            }
+        });
+        $(".deleteProduct").click(function () {
+            var productId = $(this).closest("tr").find("td:nth-child(3)").text().trim();
+            $("#dProductId").val(productId);
+        })
+        $("#deleteAllProduct").click(listProduct)
+    })
+
+    </script>
+
+
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="row page-titles">
+        <div class="col-md-6 align-self-center">
+            <h3 class="text-themecolor" style="color:blueviolet">Quản lý sản phẩm</h3>
+        </div>
+        <div class="col-md-6 align-self-center">
+            <a style="float:right" href="#addProductModal" class="btn btn-success" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span>Thêm sản phẩm</span></a>
+            <a id="deleteAllProduct" style="float:right; margin-right:8px;" href="#deleteProductModal" class="btn btn-danger" data-toggle="modal"><i class="fa fa-trash-o"></i> <span>Xóa</span></a>
+        </div>
+    </div>
+    <div class="row">
+        <!-- column -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title" style="color:darkblue">Danh sách sản phẩm</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="checkbox">
+                                            <input type="checkbox" id="selectAll">
+                                            <label for="selectAll"></label>
+                                        </span>
+                                    </th>
+                                    <th>STT</th>
+                                    <th>Tên</th>
+                                    <th>Ảnh</th>
+                                    <th>Giá</th>
+                                    <th>Mô tả</th>
+                                    <th>Danh mục</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                        int stt = 1;
+                                        foreach (var p in ViewBag.Product)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <span class="checkbox">
+                                                        <input type="checkbox" id="checkbox_@p.Id" name="options[]" value="@stt">
+                                                        <label for="checkbox_@p.Id"></label>
+                                                    </span>
+                                                </td>
+                                                <td>@stt</td>
+                                                <td style="display:none">@p.Id</td>
+                                                <td>@p.Names</td>
+                                                <td><img style=" width: 15rem" src="/Resources/Image/@p.Images"atl="@p.Names" /></td>
+                                                <td>@String.Format("{0:0,##}", p.Prices) VND</td>
+                                                <td class="small">@p.Descriptions</td>
+                                                <td>@p.CategoryName</td>
+                                                <td style="display:none">@p.Prices</td>
+                                                @{ if (p.Available  == false)
+                                                    {
+                                                        <td>Hết hàng</td>
+                                                    }
+                                                    else
+                                                    { 
+                                                        <td>Còn hàng</td>
+                                                    }
+                                                 }
+                                                <td>
+                                                    <a href="#editProductModal" class="edit editProduct" data-toggle="modal"><i style="margin-right:5px" class="fa fa-edit" title="Sửa"></i></a>
+                                                    <a href="#deleteProductModal" class="delete deleteProduct" data-toggle="modal"><i class="fa fa-trash" title="Xóa"></i></a>
+                                                </td>
+                                            </tr>
+                                            stt++;
+                                        }
+                                    }
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a href="#">Previous</a></li>
+                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Add Modal HTML -->
+        <div id="addProductModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    @using (Html.BeginForm("AddProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="modal-header">
+                            <h4 class="modal-title" style="color:blueviolet">Thêm sản phẩm</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            @Html.Partial("_AddProduct")
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <input style="color:black" type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                            <input type="submit" class="btn btn-success" value="Thêm">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Edit Modal HTML -->
+        <div id="editProductModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    @using (Html.BeginForm("EditProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="modal-header">
+                            <h4 class="modal-title" style="color:blueviolet">Sửa sản phẩm</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            @Html.Partial("_EditProduct")
+                        </div>
+                        <div class="modal-footer">
+                            <input style="color:black" type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                            <input type="submit" class="btn btn-info" value="Lưu">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <!-- Delete Modal HTML -->
+        <div id="deleteProductModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="/Product/DeleteProduct" method="post">
+                        <div class="modal-header">
+                            <h4 class="modal-title" style="color:blueviolet">Xóa sản phẩm</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p style="color:black">Bạn có chắc chắn muốn xóa mục đã chọn?</p>
+                            <p class="text-warning"><small>Thao tác này không thể hoàn tác.</small></p>
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" name="Id" id="dProductId" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input style="color:black" type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                            <input type="submit" class="btn btn-danger" value="Xóa">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- End Page Content -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+<style>
+    #wrapper #content-wrapper #content {
+        flex: 0 0 auto;
+    }
+    th, td {
+        color: black;
+    }
+
+</style>
+
+
+

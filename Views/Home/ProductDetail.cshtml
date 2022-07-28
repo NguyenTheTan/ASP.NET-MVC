@@ -1,0 +1,180 @@
+﻿@model Project_MVC.Models.Product
+@using Project_MVC.Models
+@{
+    DemoEntities1 db = new DemoEntities1();
+    ViewBag.Title = "Product";
+    var p = db.Products;
+    var cate = db.Categories;
+}
+
+@*Ajax Add To cart*@
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#addtocart").click(function () {
+            var model = {};
+            model.Id = @Model.Id;
+            model.Quantity = $("#amount").val();
+            var total = parseInt($("#cartCount").val());
+            $.ajax({
+                type: "POST",
+                url: '/Cart/AddToCart/',
+                data: model,
+                success: function (data) {
+                    alert("Thêm giỏ hàng thành công")
+                    $("#cartCount").html(data);
+                },
+                error: function () {
+                    location.href = "/Home/Login"
+                }
+            });
+            return false;
+
+        })
+    })
+   
+</script>*@
+
+<!--Main layout-->
+<main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+
+        <!--Grid row-->
+        <div class="row wow fadeIn">
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">
+
+                <img src="/Resources/Image/@Model.Images" class="img-fluid" alt="@Model.Names">
+
+            </div>
+            <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">
+
+                <!--Content-->
+                <div class="p-4">
+
+                    <div class="mb-3">
+                        <a class="badge purple mr-1" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Danh mục</a>
+
+                        <a href="">
+                            <span class="badge blue mr-1">New</span>
+                        </a>
+                        <a href="">
+                            <span class="badge red mr-1">Bestseller</span>
+                        </a>
+                    </div>
+                    <a href="">
+                        <div class="row">
+                            <div class="col">
+                                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                    @foreach (var c in cate)
+                                    {
+                                        <div class="card card-body">
+                                            @c.Category1
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <p class="lead">
+                        <span class="mr-1">
+                            <del>@String.Format("{0:0,##}", Model.Prices) VND</del>
+                        </span>
+                        <b>@String.Format("{0:0,##}", Model.Prices) VND</b>
+                    </p>
+
+                    <div>
+                        <h5 style="font-weight: 500; color: blueviolet">Size:</h5>
+                        <div class="value">
+                            <div>
+                                <button data-toggle="tooltip" title="S" class="btn btn-md font-weight-bold" >S</button>
+                                <button data-toggle="tooltip" title="M" class="btn btn-md font-weight-bold">M</button>
+                                <button data-toggle="tooltip" title="L" class="btn btn-md font-weight-bold" >L</button>
+                            </div>
+                            <a class="reset_variations" href="#" style="visibility: hidden;">Xóa</a>
+                        </div>
+                    </div>
+
+                    <form class="d-flex justify-content-left">
+                        <a href="/Cart/AddToCart/@Model.Id" class="btn btn-primary btn-md my-0 " id="addtocart">
+                            Thêm vào giỏ hàng
+                            <i class="fas fa-shopping-cart ml-1"></i>
+                        </a>
+                        <a href="/Cart/" class="btn btn-primary btn-md my-0 ">
+                            Đến giỏ hàng
+                            <i class="fa-solid fa-right-long"></i>
+                        </a>
+                    </form>
+
+                    <br />
+
+                    <p style="color:blueviolet" class="lead font-weight-bold">Mô tả</p>
+
+                    <b>
+                        @Model.Descriptions
+                    </b>
+
+                </div>
+                <!--Content-->
+
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->
+
+        <hr>
+
+        <!--Grid row-->
+        <div class="row d-flex justify-content-center wow fadeIn">
+
+            <!--Grid column-->
+            <div class="col-md-6 text-center">
+
+                <h4 class="my-4 h4">Sản phẩm tương tự</h4>
+
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit
+                    voluptates,
+                    quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.
+                </p>
+
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->
+        <!--Grid row-->
+        <div class="row wow fadeIn">
+
+            <!--Grid column-->
+            <div class="col-lg-4 col-md-12 mb-4">
+
+                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
+
+            </div>
+            <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-lg-4 col-md-6 mb-4">
+
+                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
+
+            </div>
+            <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-lg-4 col-md-6 mb-4">
+
+                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
+
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->
+
+    </div>
+</main>
+<!--Main layout-->

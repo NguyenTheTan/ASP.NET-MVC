@@ -1,0 +1,436 @@
+﻿@{
+    ViewBag.Title = "Trang chủ";
+}
+@using Project_MVC.Models;
+
+@{
+
+    DemoEntities1 db = new DemoEntities1();
+    var listCategory = db.Categories;
+}
+
+<!--Carousel Wrapper-->
+<div id="carousel-example-1z" class="carousel slide carousel-fade mt-4" data-ride="carousel">
+
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-1z" data-slide-to="1"></li>
+        <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+    </ol>
+    <!--/.Indicators-->
+    <!--Slides-->
+    <div class="carousel-inner pt-4" role="listbox">
+
+        <!--First slide-->
+        <div class="carousel-item active">
+            <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%282%29.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+                <!-- Mask & flexbox options-->
+                <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
+
+                    <!-- Content -->
+                    <div class="text-center white-text mx-5 wow fadeIn">
+                        <h1 class="mb-4">
+                            <strong>Learn Bootstrap 4 with MDB</strong>
+                        </h1>
+
+                        <p>
+                            <strong>Best & free guide of responsive web design</strong>
+                        </p>
+
+                        <p class="mb-4 d-none d-md-block">
+                            <strong>
+                                The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and
+                                written versions
+                                available. Create your own, stunning website.
+                            </strong>
+                        </p>
+
+                        <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">
+                            Start
+                            free tutorial
+                            <i class="fas fa-graduation-cap ml-2"></i>
+                        </a>
+                    </div>
+                    <!-- Content -->
+
+                </div>
+                <!-- Mask & flexbox options-->
+
+            </div>
+        </div>
+        <!--/First slide-->
+        <!--Second slide-->
+        <div class="carousel-item">
+            <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%283%29.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+                <!-- Mask & flexbox options-->
+                <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
+
+                    <!-- Content -->
+                    <div class="text-center white-text mx-5 wow fadeIn">
+                        <h1 class="mb-4">
+                            <strong>Learn Bootstrap 4 with MDB</strong>
+                        </h1>
+
+                        <p>
+                            <strong>Best & free guide of responsive web design</strong>
+                        </p>
+
+                        <p class="mb-4 d-none d-md-block">
+                            <strong>
+                                The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and
+                                written versions
+                                available. Create your own, stunning website.
+                            </strong>
+                        </p>
+
+                        <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">
+                            Mua sắm
+                            <i class="fa-brands fa-shopify"></i>
+                        </a>
+                    </div>
+                    <!-- Content -->
+
+                </div>
+                <!-- Mask & flexbox options-->
+
+            </div>
+        </div>
+        <!--/Second slide-->
+        <!--Third slide-->
+        <div class="carousel-item">
+            <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%285%29.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+                <!-- Mask & flexbox options-->
+                <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
+
+                    <!-- Content -->
+                    <div class="text-center white-text mx-5 wow fadeIn">
+                        <h1 class="mb-4">
+                            <strong>Learn Bootstrap 4 with MDB</strong>
+                        </h1>
+
+                        <p>
+                            <strong>Best & free guide of responsive web design</strong>
+                        </p>
+
+                        <p class="mb-4 d-none d-md-block">
+                            <strong>
+                                The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and
+                                written versions
+                                available. Create your own, stunning website.
+                            </strong>
+                        </p>
+
+                        <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">
+                            Start
+                            free tutorial
+                            <i class="fas fa-graduation-cap ml-2"></i>
+                        </a>
+                    </div>
+                    <!-- Content -->
+
+                </div>
+                <!-- Mask & flexbox options-->
+
+            </div>
+        </div>
+        <!--/Third slide-->
+
+    </div>
+    <!--/.Slides-->
+    <!--Controls-->
+    <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+    <!--/.Controls-->
+
+</div>
+<!--/.Carousel Wrapper-->
+<!--Main layout-->
+<main>
+    <div class="container">
+
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+
+            <!-- Navbar brand -->
+            <span style=" font-weight:500" class="navbar-brand">Danh mục:</span>
+
+            <!-- Collapse button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+                    aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible content -->
+            <div class="collapse navbar-collapse" id="basicExampleNav">
+
+                <!-- Links -->
+                <ul class="navbar-nav mr-auto">
+                    <li style="font-weight:500" class="nav-item">
+                        <a class="nav-link" href="/Home/" style="padding-bottom:5px">
+                            Tất cả
+                        </a>
+                    </li>
+                    @foreach (var i in listCategory)
+                    {
+                        <li style="font-weight:500" class="nav-item">
+                            <a class="nav-link" href="/Home/ProductCate/@i.Id" name="Id" id="cate" style="padding-bottom:5px">
+                                @i.Category1
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <!-- Links -->
+
+                <form action="/Home/Search" method="get" class="form-inline">
+                    <div class="md-form my-0 input-group dropdown">
+                        <div class=" dropdown-toggle" data-toggle="dropdown">
+                            <input class="form-control mr-sm-2" name="searchInput" id="searchName" placeholder="Tìm kiếm sản phẩm" aria-label="Search" />
+                        </div>
+                        <a id="search" class="m-auto"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        <div id="searchItem" style="min-width: 260px; max-height: 280px; overflow-x: hidden; overflow-y: scroll" class=" dropdown-menu"></div>
+                    </div>
+                </form>
+            </div>
+            <!-- Collapsible content -->
+
+        </nav>
+        <!--/.Navbar-->
+        <!--Grid row-->
+        <div id="item" class="row"></div>
+        <!--Pagination-->
+        <nav class="d-flex justify-content-center wow fadeIn">
+            <ul id="pager" class="pagination pg-blue">
+                <!--Arrow left-->
+                <li class="page-item">
+                    <a class="page-link" href="--pageNo" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+
+                <li id="pageItem" class="page-item d-flex"></li>
+
+                <li class="page-item">
+                    <a class="page-link" href="++pageNo" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!--Pagination-->
+
+    </div>
+
+</main>
+<!--Main layout-->
+
+
+<script>
+
+    $(document).ready(function () {
+
+        // search Product
+        $("#searchName").keyup(function (e) {
+            if (e.keyCode != 13) {
+                searchRealtime();
+            } else {
+                searchProduct();
+            }
+
+        })
+
+        $("#search").click(function () {
+            searchProduct();
+        })
+        function searchProduct() {
+            var searchProduct = $("#searchName").val();
+            if (searchProduct != null) {
+                $.ajax({
+                    url: "/Home/Search",
+                    contentType: 'application/json; charset=utf-8',
+                    data: { searchInput: searchProduct },
+                    success: function (data) {
+                        if (data.length > 0) {
+                            $("#item").html("")
+                            $(data).each(function (i, e) {
+                                $("#item").html(`${$("#item").html()}
+                                    <div class="col-lg-3 col-md-4 col-6 mb-4">
+                                        <div class="card" style="height:330px">
+
+                                            <div class="view overlay">
+                                                <img src="/Resources/Image/${e.Images}" class="card-img-top"
+                                                     alt="${e.Names}">
+                                                <a href="~/Home/ProductDetail/${e.Id}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            </div>
+
+                                            <div class="card-body text-center">
+                                                <p>
+                                                    <strong>
+                                                        <a href="~/Home/ProductDetail/${e.Id}" class="dark-grey-text">
+                                                            ${e.Names}
+                                                        </a>
+                                                    </strong>
+                                                </p>
+
+                                                <p class="font-weight-bold blue-text">
+                                                    <strong>${parseFloat(e.Prices).toLocaleString('vi-VN')} VND</strong>
+                                                </p>
+
+                                            </div>
+                                            <!--Card content-->
+                                        </div>
+                                    </div>`
+                                )
+                            })
+                        } else {
+                            $("#item").html("<p style='margin: auto; text-align: center; color: red; font-weight: 500; padding-bottom: 4rem;'>Không tìm thấy sản phẩm</p>")
+                        }
+                    },
+                    error: function (data) {
+                        alert("Thông tin bạn tìm có thể bị lỗi! Hãy thử lại sau.")
+                    }
+                })
+            }
+        }
+        function searchRealtime() {
+            var search = $("#searchName").val();
+            if (search != null) {
+                $.ajax({
+                    url: "/Home/Search",
+                    contentType: 'application/json; charset=utf-8',
+                    data: { searchInput: search },
+                    success: function (data) {
+                        if (data.length > 0) {
+                            $("div#searchItem").html("")
+                            $(data).each(function (i, e) {
+                                $("div#searchItem").html(`${$("div#searchItem").html()}
+                            <div style="cursor:pointer; padding:4px; box-shadow: 0px 0px 0px 8px rgba(0,0,0,0.2); " onclick="location.href = '/Home/ProductDetail/${e.Id}'" class="item-left mb-2 d-flex">
+                                <img id="img" width="60" height="60" src="/Resources/Image/${e.Images}" alt="${e.Names}" />
+                                <div style="color:darkblue; font-weight:400; display: grid" class="item-info small ml-2">
+                                    <span>${e.Names}</span>
+                                    <span>Giá: ${parseInt(e.Prices).toLocaleString('vi-VN')} VND</span>
+                                </div>
+                            </div>`
+                                )
+                            })
+                        } else {
+                            $("div#searchItem").html("<p style='margin-bottom: 0; text-align: center; color: red; font-weight: 500;'>Không tìm thấy sản phẩm</p>")
+                        }
+
+
+                    },
+                    error: function (data) {
+                        alert("Thông tin bạn tìm có thể bị lỗi! Hãy thử lại sau.")
+                    }
+                })
+            }
+        }
+
+        // Phân trang
+        var pageNo = 0;
+        var pageCount = @(ViewBag.pageCount);
+        var maxCount = 5;
+
+        $(function () {
+            fnLoadPage();
+            $("#pageItem").append(`<a class="num page-link showHideColor" href="${0}">${1}</a>`)
+            for (var i = 1; i < pageCount; i++) {
+                if (i < maxCount) {
+                    $("#pageItem").append(`<a class="num page-link" href="${i}">${i + 1}</a>`)
+                }
+            };
+            $(document).delegate("#pager a", "click", function (event) {
+                var temp = $(this).attr("href");
+                switch (temp) {
+                    case "--pageNo":
+                        if (pageNo != 0) {
+                            var currentActive = $('a.showHideColor'); // get current active
+                            if (pageNo < pageCount - 4) {
+                                $("#pageItem").empty();
+                                if (pageCount >= (pageNo + 1)) {
+                                    $("#pageItem").append(`<a class="num page-link" href="${pageNo}">${pageNo}</a>`)
+                                    $("#pageItem").append(`<a class="num page-link" href="${pageNo + 1}">${pageNo + 1}</a>`)
+                                    $("#pageItem").append(`<a class="num page-link" href="${pageNo + 2}">${pageNo + 2}</a>`)
+                                    $("#pageItem").append(`<a class="num page-link" href="${pageNo + 3}">${pageNo + 3}</a>`)
+                                    $("#pageItem").append(`<a class="num page-link" href="${pageNo + 4}">${pageNo + 4}</a>`)
+                                }
+                            }
+                            eval("pageNo = (pageCount + " + temp + ") % pageCount")
+                           
+                            currentActive.removeClass('showHideColor'); // remove class active
+                            if (currentActive.is(':first-child')) {
+                                $('a.num').first().addClass('showHideColor'); // add class to first li if first child
+                            } else {
+                                currentActive.prev('a.num').addClass('showHideColor'); // otherwise add active to next li
+                            }
+                        }
+                        break;
+                    case "++pageNo":
+                        if (pageNo != pageCount - 1) {
+                            var currentActive = $('a.showHideColor');
+                            if (pageNo > 3) {
+                                $("#pageItem").empty();
+                                if (pageCount >= (pageNo + 2)) {
+                                    $("#pageItem").append(`<a class="num page-link" href="${pageNo - 3}">${pageNo - 2}</a>`)
+                                    $("#pageItem").append(`<a class="num page-link" href="${pageNo - 2}">${pageNo - 1}</a>`)
+                                    $("#pageItem").append(`<a class="num page-link" href="${pageNo - 1}">${pageNo}</a>`)
+                                    $("#pageItem").append(`<a class="num page-link" href="${pageNo}">${pageNo + 1}</a>`)
+                                    $("#pageItem").append(`<a class="num page-link" href="${pageNo + 1}">${pageNo + 2}</a>`)
+                                }
+                            }
+                            eval("pageNo = (pageCount + " + temp + ") % pageCount")
+                            currentActive.removeClass('showHideColor'); // remove class active
+                            if (currentActive.is(':last-child')) {
+                                $('a.num').last().addClass('showHideColor'); // add class to first li if last child
+                            } else {
+                                currentActive.next('a.num').addClass('showHideColor'); // otherwise add active to next li
+                            }
+                        }
+                        break;
+                    default:
+                        eval("pageNo = (pageCount + " + temp + ") % pageCount");
+                        break;
+                }
+                if (event.target.className == "num page-link" || event.target.className == " num page-link" || event.target.className == "num page-link showHideColor") {
+                    $("#pageItem a").each(function () {
+                        $(this).removeClass("showHideColor");
+                    })
+                    $(this).addClass("showHideColor");
+                }
+                fnLoadPage();
+                return false;
+            })
+        })
+
+        function fnLoadPage() {
+            $.ajax({
+                url: "/Home/Paginate",
+                data: { pageNo: pageNo },
+                success: function (data) {
+                    $("#item").html(data);
+                }
+            })
+        }
+
+    })
+</script>
+
+<style>
+    .showHideColor{
+        color:blue !important;
+        font-weight: 500;
+    }
+</style>

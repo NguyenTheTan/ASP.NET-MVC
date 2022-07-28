@@ -1,0 +1,224 @@
+﻿@model Project_MVC.Models.Category
+@using Project_MVC.Models
+
+@{
+    DemoEntities1 db = new DemoEntities1();
+    var category = db.Categories;
+    ViewBag.Title = "Index";
+}
+
+<script>
+
+    function listCategory() {
+        var values = new Array;
+        $.each($("input[name ='options[]']:checked").closest("tr").find("td:nth-child(3)"),
+            function () {
+                values.push($(this).text());
+            }
+        );
+        $("#dCategoryId").val(values.join(" "));
+    }
+    $(document).ready(function () {
+
+        $("#selectAll").click(function () {
+            $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+
+        $(".editCategory").click(function () {
+            var categoryId = $(this).closest("tr").find("td:nth-child(3)").text().trim();
+            var categoryName = $(this).closest("tr").find("td:nth-child(4)").text().trim();
+            $("#categoryId").val(categoryId);
+            $("#categoryName").val(categoryName);
+        });
+        $(".deleteCategory").click(function () {
+            var categoryId = $(this).closest("tr").find("td:nth-child(3)").text().trim();
+            $("#dCategoryId").val(categoryId);
+        })
+        $("#deleteAllCategory").click(listCategory)
+    })
+
+</script>
+
+
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="row page-titles">
+        <div class="col-md-6 align-self-center">
+            <h3 class="text-themecolor" style="color:blueviolet">Quản lý danh mục</h3>
+        </div>
+        <div class="col-md-6 align-self-center">
+            <a style="float:right" href="#addCategoryModal" class="btn btn-success" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span>Thêm danh mục</span></a>
+            <a id="deleteAllCategory" style="float:right; margin-right:8px;" href="#deleteCategoryModal" class="btn btn-danger" data-toggle="modal"><i class="fa fa-trash-o"></i> <span>Xóa</span></a>
+        </div>
+    </div>
+    <div class="row">
+        <!-- column -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title" style="color:black">Danh sách danh mục</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="checkbox">
+                                            <input type="checkbox" id="selectAll">
+                                            <label for="selectAll"></label>
+                                        </span>
+                                    </th>
+                                    <th>STT</th>
+                                    <th>Tên</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                        int stt = 1;
+                                        foreach (var c in ViewBag.Cate)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <span class="checkbox">
+                                                        <input type="checkbox" id="checkbox_@c.Id" name="options[]" value="@stt">
+                                                        <label for="checkbox_@c.Id"></label>
+                                                    </span>
+                                                </td>
+                                                <td>@stt</td>
+                                                <td style="display:none">@c.Id</td>
+                                                <td>@c.Category1</td>
+                                                <td>
+                                                    <a href="#editCategoryModal" class="edit editCategory" data-toggle="modal"><i style="margin-right:5px" class="fa fa-edit" title="Sửa"></i></a>
+                                                    <a href="#deleteCategoryModal" class="delete deleteCategory" data-toggle="modal"><i class="fa fa-trash" title="Xóa"></i></a>
+                                                </td>
+                                            </tr>
+                                            stt++;
+                                        }
+                                    }
+                            </tbody>
+                        </table>
+                        <div class="clearfix">
+                            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a href="#">Previous</a></li>
+                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <!-- Add Modal HTML -->
+        <div id="addCategoryModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    @using (Html.BeginForm("AddCategory", "Category", FormMethod.Post))
+                    {
+                        <div class="modal-header">
+                            <h4 class="modal-title" style="color:blueviolet">Thêm danh mục</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label style="color:darkblue">Tên danh mục</label>
+                                @Html.TextBoxFor(m => m.Category1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Category1, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input style="color: red" type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                            <input type="submit" class="btn btn-success" value="Thêm">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Edit Modal HTML -->
+        <div id="editCategoryModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="/Category/EditCategory" method="post">
+                        <div class="modal-header">
+                            <h4 class="modal-title" style="color:blueviolet">Sửa danh mục</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" name="Id" id="categoryId" required>
+                            </div>
+                            <div class="form-group">
+                                <label style="color:darkblue">Tên danh mục</label>
+                                <input type="text" class="form-control" name="Category1" id="categoryName" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input style="color:red" type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                            <input type="submit" class="btn btn-info" value="Lưu">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Delete Modal HTML -->
+        <div id="deleteCategoryModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="/Category/DeleteCategory" method="post">
+                        <div class="modal-header">
+                            <h4 class="modal-title" style="color:blueviolet">Xóa danh mục</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p style="color:black">Bạn có chắc chắn muốn xóa mục đã chọn?</p>
+                            <p class="text-warning"><small>Thao tác này không thể hoàn tác!</small></p>
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" name="Id" id="dCategoryId" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input style="color:black" type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                            <input type="submit" class="btn btn-danger" value="Xóa">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- End Page Content -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+<style>
+    #wrapper #content-wrapper #content {
+        flex: 0 0 auto;
+    }
+    th,td{
+        color: black;
+    }
+    
+</style>
+

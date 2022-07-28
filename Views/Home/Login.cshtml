@@ -1,0 +1,80 @@
+﻿@model Project_MVC.Models.User
+@{
+    ViewBag.Title = "Login";
+}
+
+<section class="vh-100" style="margin-top: 6rem">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 text-black">
+
+                <div class="px-5 ms-xl-4">
+                    <i class="fas fa-crow fa-2x me-3 pt-5 mt-xl-4" style="color: #709085;"></i>
+                    <span class="h3 fw-bold mb-0">You&Me Shop</span>
+                </div>
+
+                <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+
+                    @using(Html.BeginForm("Login", "Home", FormMethod.Post, new { style = "width: 23rem;" })) {
+
+                        <h3 class=" mb-3 pb-3" style="letter-spacing: 1px; color:blueviolet">Đăng nhập</h3>
+
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="form2Example18" style="font-weight:500">Email</label>
+                            @Html.TextBoxFor(m => m.email, new { @id = "form2Example18", @class = "form-control form-control-lg" })
+                            @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="form2Example28" style="font-weight:500">Mật khẩu</label>
+                            @Html.TextBoxFor(m => m.password, new { @type = "password", @id = "form2Example28", @class = "form-control form-control-lg" })
+                            @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="pt-1 mb-4">
+                            <button class="btn btn-info btn-lg btn-block" type="submit">Đăng nhập</button>
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                        <div>
+                            <p style="font-weight:500"><a href="#!">Quên mật khẩu?</a></p>
+                            <p style="font-weight:500">Chưa có tài khoản? <a href="~/Home/Register" class="link-info">Đăng ký</a></p>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+            <div class="col-sm-6 px-0 d-none d-sm-block">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img3.webp"
+                     alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<style>
+    .bg-image-vertical {
+position: relative;
+overflow: hidden;
+background-repeat: no-repeat;
+background-position: right center;
+background-size: auto 100%;
+}
+
+@@media (min-width: 1025px) {
+.h-custom-2 {
+height: 100%;
+}
+}
+li{
+    list-style-type: none;
+}
+ul{
+    padding-left: 0;
+}
+</style>
+

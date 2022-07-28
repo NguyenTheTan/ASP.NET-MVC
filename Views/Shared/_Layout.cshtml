@@ -1,0 +1,293 @@
+﻿@using Project_MVC.Models;
+@{ 
+    DemoEntities1 db = new DemoEntities1();
+    var user = Session["email"] as User;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title> You&Me Shop - Trang mua sắm hàng đầu Việt Nam</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="~/Content/css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="~/Content/css/style.min.css" rel="stylesheet">
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+
+    <style type="text/css">
+        html,
+        body,
+        header,
+        .carousel {
+            height: 60vh;
+        }
+
+        @@media (max-width: 740px) {
+
+            html,
+            body,
+            header,
+            .carousel {
+                height: 100vh;
+            }
+        }
+
+        @@media (min-width: 800px) and (max-width: 850px) {
+
+            html,
+            body,
+            header,
+            .carousel {
+                height: 100vh;
+            }
+        }
+        ul.dropdown-cart {
+            min-width: 300px;
+            /*border: 2px solid #343434;*/
+            padding: 2px;
+            margin: 7px;
+            margin-top: 11px;
+        }
+
+            ul.dropdown-cart li .item {
+                display: block;
+                padding: 3px 10px;
+                margin: 3px 0;
+            }
+
+                ul.dropdown-cart li .item:hover {
+                    background-color: #c3c5c5;
+                }
+
+                ul.dropdown-cart li .item:after {
+                    visibility: hidden;
+                    display: block;
+                    content: "";
+                    font-size: 0;
+                    clear: both;
+                    height: 0;
+                }
+
+            ul.dropdown-cart li .item-left {
+                float: left;
+            }
+
+                ul.dropdown-cart li .item-left img,
+                ul.dropdown-cart li .item-left span.item-info {
+                    float: left;
+                }
+
+                ul.dropdown-cart li .item-left span.item-info {
+                    margin-left: 10px;
+                }
+
+                    ul.dropdown-cart li .item-left span.item-info span {
+                        display: block;
+                    }
+
+            ul.dropdown-cart li .item-right {
+                float: right;
+            }
+
+                ul.dropdown-cart li .item-right button {
+                    margin-top: 14px;
+                }
+        .dropdown-toggle::after {
+            content: none;
+        }
+    </style>
+
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+        <ul class="container-fluid mb-0">
+
+            <!-- Brand -->
+            <a class="navbar-brand waves-effect" href="/">
+                <img style="width: 4.5rem" src="~/Resources/Image/shop.png" alt="logo" />
+            </a>
+
+            <!-- Collapse -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Links -->
+            <ul class="collapse navbar-collapse mb-0 pl-0" id="navbarSupportedContent">
+
+                <!-- Left -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a style="font-weight: bold" class="nav-link waves-effect" href="/">
+                            Trang chủ
+                        </a>
+                    </li>
+                    @*<li  class="nav-item">
+                            <a style="font-weight: bold" class="nav-link waves-effect" href="#">Thêm sản phẩm</a>
+                        </li>*@
+                    <li class="nav-item">
+                        <a style="font-weight: bold" class="nav-link waves-effect" href="~/Order/">Thanh toán</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="font-weight: bold" class="nav-link waves-effect" href="#">
+                            Sản phẩm
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Right -->
+                <ul class="navbar-nav nav-flex-icons">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle nav-link waves-effect" data-toggle="dropdown" role="button" aria-expanded="false">
+                            @if(user != null) 
+                            { 
+                                <span id="cartCount" style="position:absolute;top: 0;right:0;height:15px" class="badge rounded-circle red"> @db.Users.Find(user.id).Carts.Count()</span>
+                            }
+                            <i data-toggle="tooltip" title="Giỏ hàng" style="position:relative" class="fas fa-shopping-cart"></i>
+                        </a>
+                        @Html.Partial("_CartInfo")
+                        
+                    </li>
+
+                    @if (Session["email"] == null)
+                    {
+                        <li class="nav-item">
+                            <a href="#" class="nav-link waves-effect" target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link waves-effect" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item mr-2">
+                            <a href="~/Home/Login" class="nav-link border border-light rounded waves-effect">
+                                <i class="fa-solid fa-right-to-bracket mr-2"></i><span style="font-weight:500">Đăng nhập</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Home/Register" class="nav-link border border-light rounded waves-effect">
+                                <i class="fa-solid fa-user-plus mr-2"></i><span style="font-weight:500">Đăng ký</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item" style="color: red; font-weight:bold; padding:8px">Xin chào: @user.name </li>
+                        <li class="nav-item" style="padding: 8px">
+                            <a data-toggle="tooltip" title="Đăng xuất" href="/Home/Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+                        </li>
+                        <li class="nav-item" style="padding: 8px">
+                            @if (user.role == 0)
+                            {
+                                <a data-toggle="tooltip" title="Đến trang quản lý" href="/Admin/Home"><i class="fa-solid fa-people-roof"></i></a>
+                            }
+                        </li>
+                    }
+                </ul>
+
+            </ul>
+        </ul>
+
+    </nav>
+    <!-- Navbar -->
+
+    @RenderBody();
+
+    <!--Footer-->
+    <footer class="page-footer text-center font-small wow fadeIn">
+        <hr class="my-4">
+
+        <!-- Social icons -->
+        <div class="pb-4">
+            <a href="https://www.facebook.com/mdbootstrap" target="_blank">
+                <i class="fab fa-facebook-f mr-3"></i>
+            </a>
+
+            <a href="https://twitter.com/MDBootstrap" target="_blank">
+                <i class="fab fa-twitter mr-3"></i>
+            </a>
+
+            <a href="https://www.youtube.com/watch?v=7MUISDJ5ZZ4" target="_blank">
+                <i class="fab fa-youtube mr-3"></i>
+            </a>
+
+            <a href="https://plus.google.com/u/0/b/107863090883699620484" target="_blank">
+                <i class="fab fa-google-plus-g mr-3"></i>
+            </a>
+
+            <a href="https://dribbble.com/mdbootstrap" target="_blank">
+                <i class="fab fa-dribbble mr-3"></i>
+            </a>
+
+            <a href="https://pinterest.com/mdbootstrap" target="_blank">
+                <i class="fab fa-pinterest mr-3"></i>
+            </a>
+
+            <a href="https://github.com/mdbootstrap/bootstrap-material-design" target="_blank">
+                <i class="fab fa-github mr-3"></i>
+            </a>
+
+            <a href="http://codepen.io/mdbootstrap/" target="_blank">
+                <i class="fab fa-codepen mr-3"></i>
+            </a>
+        </div>
+        <!-- Social icons -->
+        <!--Copyright-->
+        <div class="footer-copyright py-3">
+            © 2019 Copyright:
+            <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> MeShop.com </a>
+        </div>
+        <!--/.Copyright-->
+
+    </footer>
+    <!--/.Footer-->
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="~/Content/js/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="~/Content/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="~/Content/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="~/Content/js/mdb.min.js"></script>
+    <!-- Initializations -->
+    <script type="text/javascript">
+        // Animations initialization
+        new WOW().init();
+
+    </script>
+
+    <!-- Tooltip -->
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            window.addEventListener("pageshow", function (event) {
+                var historyTraversal = event.persisted ||
+                    (typeof window.performance != "undefined" &&
+                        window.performance.navigation.type === 2);
+                if (historyTraversal) {
+                    // Handle page restore.
+                    window.location.reload();
+                }
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

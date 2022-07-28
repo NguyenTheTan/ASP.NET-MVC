@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Project_MVC.Models.Product>
+
+@if (Model.Count() != 0)
+{
+    foreach (var i in Model)
+    {
+        var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-4 col-6 mb-4">
+            <!--Card-->
+            <div class="card" style="height:25rem">
+                <!--Card image-->
+                <div class="view overlay">
+                    <img src="/Resources/Image/@i.Images" class="card-img-top" style="height:inherit"
+                         alt="@i.Names">
+                    <a href="~/Home/ProductDetail/@i.Id">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+                <!--Card content-->
+                <div class="card-body text-center">
+                    <p>
+                        <strong>
+                            <a href="~/Home/ProductDetail/@i.Id" class="dark-grey-text">
+                                @i.Names
+                                @*<span class="badge badge-pill danger-color" style="font-size: 8px">Mới</span>*@
+                            </a>
+                        </strong>
+                    </p>
+
+                    <p class="font-weight-bold blue-text">
+                        <strong>@String.Format(info, "{0:0,##}", i.Prices) VND</strong>
+                    </p>
+
+                </div>
+                <!--Card content-->
+                <form class="d-flex justify-content-between">
+                    <a href="/Cart/AddToCart/@i.Id" class="btn btn-primary btn-md  " id="addtocart">
+                        Thêm vào giỏ hàng
+                        <i class="fas fa-shopping-cart ml-1"></i>
+                    </a>
+                    <a href="#" style="font-size: 1.5rem; color:hotpink; margin:auto"><i class="far fa-heart"></i></a>
+                </form>
+            </div>
+            <!--Card-->
+        </div>
+    }
+}
+else 
+{
+    <p style=" margin: auto; color: red; font-weight: 500; padding: 2rem;">Không có sản phẩm</p>
+}
+
+

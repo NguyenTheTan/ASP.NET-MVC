@@ -1,0 +1,328 @@
+﻿@model Project_MVC.Models.Order
+@using Project_MVC.Models
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+@{
+    DemoEntities1 db = new DemoEntities1();
+    var user = Session["email"] as User;
+    var cart = db.Carts.Where(c => c.UserId == user.id).ToList();
+    ViewBag.Title = "Index";
+}
+
+@if (cart.Count() > 0)
+{
+    <!--Main layout-->
+    <main class="mt-5 pt-4">
+        <div class="container wow fadeIn">
+
+            <!-- Heading -->
+            <h2 style="color:blueviolet" class="my-5 h2 text-center">Thanh toán</h2>
+
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-8 mb-4">
+
+                    <!--Card-->
+                    <div class="card">
+
+                        <!--Card content-->
+                        @using (Html.BeginForm("CheckoutForm", "Order", FormMethod.Post, new { @class = "card-body" }))
+                        {
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.Id, new { type = "hidden", @class = "form-control", id = "ProductId" })
+                            </div>
+
+                            <!--Grid column-->
+                            <div class=" mb-2">
+                                <!--firstName-->
+                                <div class="md-form ">
+                                    @Html.TextBoxFor(m => m.FullNames, new { id = "fullName", @class = "form-control" })
+                                    <label style="font-weight:500" for="fullName" class="">Họ tên</label>
+                                    @Html.ValidationMessageFor(m => m.FullNames, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <!--Grid column-->
+
+                            <!--Grid column-->
+                            <div class=" mb-2">
+                                <!--firstName-->
+                                <div class="md-form ">
+                                    @Html.TextBoxFor(m => m.Phones, new { id = "phoneNum", @class = "form-control" })
+                                    <label style="font-weight:500" for="phoneNum" class="">Số điện thoại</label>
+                                    @Html.ValidationMessageFor(m => m.Phones, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <!--Grid column-->
+
+                            <!--address-->
+                            <div class="md-form mb-5">
+                                @Html.TextBoxFor(m => m.Adds, new { id = "address", @class = "form-control" })
+                                <label style="font-weight:500" for="address" class="">Địa chỉ</label>
+                                @Html.ValidationMessageFor(m => m.Adds, "", new { @class = "text-danger" })
+                            </div>
+
+                            <!--Grid row-->
+                            <!--<div class="row">-->
+
+                            <!--Grid column-->
+                            <!--<div class="col-lg-4 col-md-12 mb-4">
+
+                                <label for="country">Quốc gia</label>
+                                <select class="custom-select d-block w-100" id="country" required>
+                                    <option value="">Chọn...</option>
+                                    <option>Việt Nam</option>
+                                    <option>Nhật Bản</option>
+                                    <option>Hàn Quốc</option>
+                                    <option>Mỹ</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Vui lòng chọn một quốc gia hợp lệ.
+                                </div>
+
+                            </div>-->
+                            <!--Grid column-->
+                            <!--Grid column-->
+                            <!--<div class="col-lg-4 col-md-6 mb-4">
+
+                                <label for="state">Thành phố</label>
+                                <select class="custom-select d-block w-100" id="state" required>
+                                    <option value="">Choose...</option>
+                                    <option>California</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please provide a valid state.
+                                </div>
+
+                            </div>-->
+                            <!--Grid column-->
+                            <!--Grid column-->
+                            <!--<div class="col-lg-4 col-md-6 mb-4">
+
+                                <label for="zip">Zip</label>
+                                <input type="text" class="form-control" id="zip" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Zip code required.
+                                </div>
+
+                            </div>-->
+                            <!--Grid column-->
+
+                            <!--</div>-->
+                            <!--Grid row-->
+
+                            <hr>
+
+                            <div class="custom-control custom-radio">
+                                <input type="radio" name="checkout" class="custom-control-input" id="same-address" checked>
+                                <label class="custom-control-label" for="same-address">Thanh toán Online</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" name="checkout" class="custom-control-input" id="save-info">
+                                <label class="custom-control-label" for="save-info">Thanh toán Offline</label>
+                            </div>
+
+                            <hr>
+
+
+                            <div id="showHide">
+                                <div class="d-block my-3">
+                                    <span><img width="70" src="https://cdn.iconscout.com/icon/free/png-256/paypal-54-675727.png" /></span>
+                                    <span><img width="50" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/1200px-Visa_Inc._logo.svg.png" /></span>
+                                    <span><img width="50" src="https://pngimg.com/uploads/mastercard/mastercard_PNG1.png" /></span>
+                                    <span><img width="50" src="https://icon-library.com/images/american-express-icon/american-express-icon-14.jpg" /></span>
+                                    <span><img width="50" src="https://cdn.iconscout.com/icon/free/png-256/discover-credit-debit-card-bank-transaction-32285.png" /></span>
+
+
+                                    <div class="custom-control custom-radio">
+                                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                                        <label class="custom-control-label" for="credit">Thẻ tín dụng</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                        <label class="custom-control-label" for="debit">Thẻ ghi nợ</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="visa" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                        <label class="custom-control-label" for="visa">Visa</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cc-name">Tên trên thẻ</label>
+                                        <input type="text" class="form-control" id="cc-name" placeholder="Nguyen Van A" required>
+                                        <small class="text-muted">Tên đầy đủ như hiển thị trên thẻ</small>
+                                        <div class="invalid-feedback">
+                                            Tên trên thẻ là bắt buộc
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cc-number">Số trên thẻ tín dụng</label>
+                                        <input type="text" class="form-control" id="cr_no" name="card-no" placeholder="0000 0000 0000 0000" minlength="19" maxlength="19" required>
+                                        <div class="invalid-feedback">
+                                            Số thẻ tín dụng là bắt buộc
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cc-expiration">Hết hạn thẻ</label>
+                                        <input class="form-control" type="text" id="exp" name="expdate" placeholder="MM/YY" minlength="5" maxlength="5">
+                                        <div class="invalid-feedback">
+                                            Ngày hết hạn bắt buộc
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cc-expiration">CVV</label>
+                                        <input class="form-control" type="password" name="cvv" placeholder="&#9679;&#9679;&#9679;" minlength="3" maxlength="3">
+                                        <div class="invalid-feedback">
+                                            Mã bảo mật bắt buộc
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="mb-4">
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Thanh toán</button>
+                        }
+                    </div>
+                    <!--/.Card-->
+
+                </div>
+                <!--Grid column-->
+                <!--Grid column-->
+                <div class="col-md-4 mb-4">
+
+                    <!-- Heading -->
+                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <span style="color:darkblue!important" class="text-muted">Giỏ hàng của bạn</span>
+                        <span class="badge badge-secondary badge-pill">@cart.Count()</span>
+                    </h4>
+
+                    @{
+                        double sum = 0;
+                        var ship = 50000;
+                    }
+                    <!-- Cart -->
+                    <ul class="list-group mb-3 z-depth-1">
+                        @foreach (var i in cart)
+                        {
+                            sum += Convert.ToDouble(i.Product.Prices * i.Quantity);
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 style="font-weight:500" class="my-0">@i.Product.Names</h6>
+                                </div>
+                                <span style="font-weight:500">Giá: @String.Format("{0:0,##}", i.total) VND</span>
+                            </li>
+                        }
+                        <li class="list-group-item d-flex justify-content-between bg-light">
+                            <div class="text-primary">
+                                <h6 style="font-weight:500" class="my-0">Phí vận chuyển</h6>
+                            </div>
+                            <span style="font-weight:500" class="text-primary">@String.Format("{0:0,##}", ship) VND</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <strong style="font-weight:500">Tổng:</strong>
+                            <span style="font-weight:500">@String.Format("{0:0,##}", sum + ship) VND</span>
+                        </li>
+                    </ul>
+                    <!-- Cart -->
+                    <!-- Promo code -->
+                    <form class="card p-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Mã giảm giá" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary btn-md waves-effect m-0" type="button">Sử dụng</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- Promo code -->
+
+                </div>
+                <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+        </div>
+    </main>
+    <!--Main layout-->
+}
+else
+{
+    <script>
+        if (!alert("Không thể thanh toán do giỏ hàng của bạn chưa có sản phẩm")) {
+            document.location = "../Home/Index"
+        }
+    </script>
+    
+}
+
+
+<script>
+    $(document).ready(function () {
+
+        // Show Hide Card Info
+        $("#same-address").click(function () {
+            $("div#showHide").show();
+        });
+        $("#save-info").click(function () {
+            $("div#showHide").hide();
+        })
+
+
+
+        //For Card Number formatted input
+        var cardNum = document.getElementById('cr_no');
+        cardNum.onkeyup = function (e) {
+            if (this.value == this.lastValue) return;
+            var caretPosition = this.selectionStart;
+            var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
+            var parts = [];
+
+            for (var i = 0, len = sanitizedValue.length; i < len; i += 4) {
+                parts.push(sanitizedValue.substring(i, i + 4));
+            }
+
+            for (var i = caretPosition - 1; i >= 0; i--) {
+                var c = this.value[i];
+                if (c < '0' || c > '9') {
+                    caretPosition--;
+                }
+            }
+            caretPosition += Math.floor(caretPosition / 4);
+
+            this.value = this.lastValue = parts.join('-');
+            this.selectionStart = this.selectionEnd = caretPosition;
+        }
+
+        //For Date formatted input
+        var expDate = document.getElementById('exp');
+        expDate.onkeyup = function (e) {
+            if (this.value == this.lastValue) return;
+            var caretPosition = this.selectionStart;
+            var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
+            var parts = [];
+
+            for (var i = 0, len = sanitizedValue.length; i < len; i += 2) {
+                parts.push(sanitizedValue.substring(i, i + 2));
+            }
+
+            for (var i = caretPosition - 1; i >= 0; i--) {
+                var c = this.value[i];
+                if (c < '0' || c > '9') {
+                    caretPosition--;
+                }
+            }
+            caretPosition += Math.floor(caretPosition / 2);
+
+            this.value = this.lastValue = parts.join('/');
+            this.selectionStart = this.selectionEnd = caretPosition;
+        }
+    })
+</script>
+
+

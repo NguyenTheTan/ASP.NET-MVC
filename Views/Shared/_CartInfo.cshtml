@@ -1,0 +1,48 @@
+﻿@using Project_MVC.Models
+
+@{
+    DemoEntities1 db = new DemoEntities1();
+    var user = Session["email"] as User;
+    var cart = new List<Cart>();
+    if(user != null)
+    { 
+        cart = db.Carts.Where(c => c.UserId == user.id).ToList();
+    }
+}
+
+<ul id="cartitem" class="dropdown-menu dropdown-cart" role="menu">
+    @if (cart.Count() != 0 && user != null)
+    {
+            
+        foreach (var i in cart)
+        {
+            <li>
+                <span class="item">
+                    <span class="item-left">
+                        <img id="img" width="40" height="40" src="/Resources/Image/@i.Product.Images" alt="@i.Product.Names" />
+                        <span style="color:darkblue; font-weight:400" class="item-info small">
+                            <span id="name">@i.Product.Names</span>
+                            <span id="price">Giá: @String.Format("{0:0,##}", i.Product.Prices) VND</span>
+                        </span>
+                    </span>
+
+
+                    <a data-toggle="tooltip" title="Thêm sản phẩm" class="item-right">
+                        <i class="fa-solid fa-circle-plus"></i>
+                    </a>
+
+                    <a href="/Cart/Remove/@i.Id" data-toggle="tooltip" title="Xóa sản phẩm" class="item-right">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </a>
+                </span>
+            </li>
+        }
+    }
+    else
+    {
+        <b style="margin: 5.5rem!important; color: red">Giỏ hàng trống</b>
+    }
+
+    <li class="divider"></li>
+    <li><a style="font-weight:bold; color:blueviolet; display:block" class="text-center" href="/Cart/"><span>Xem giỏ hàng</span><i class="fa-solid fa-angles-right ml-1"></i></a></li>
+</ul>
